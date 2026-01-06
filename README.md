@@ -40,7 +40,7 @@ A fast, secure, and privacy-focused tool to remove metadata (EXIF, GPS, device i
 ### 🚀 Getting Started
 
 #### Live Version
-🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner) *(coming soon)*
+🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner)
 
 #### Local Installation
 
@@ -103,7 +103,7 @@ Fotoğraflarınızı çevrimiçi paylaşmadan önce metadata (EXIF, GPS, cihaz b
 ### 🚀 Başlarken
 
 #### Canlı Versiyon
-🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner) *(yakında)*
+🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner)
 
 #### Yerel Kurulum
 
@@ -164,7 +164,7 @@ Katkılarınızı bekliyoruz! Lütfen:
 
 ## 🔗 Bağlantılar
 
-- [🌐 Canlı Demo](https://huseyinacikgoz.com.tr/exif-cleaner) *(yakında)*
+- [🌐 Canlı Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
 - [💻 GitHub Repo](https://github.com/huseyinacikgoz/exif-cleaner)
 - [📧 İletişim](mailto:mail@huseyinacikgoz.com.tr)
 - [🐦 Twitter/X](https://x.com/huseyinacikgoz_)
