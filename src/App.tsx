@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import piexif from 'piexifjs';
 import exifr from 'exifr';
 import JSZip from 'jszip';
+import { cleanWebP } from './utils/webpClean';
 
 interface Metadata {
   Model?: string;
@@ -37,7 +38,7 @@ const translations = {
     instantly: "Instantly",
     processedLocally: "Processed locally in your browser",
     dragDrop: "Drag & Drop images here",
-    supports: "Supports JPEG, PNG, TIFF up to 20MB.",
+    supports: "Supports JPEG, PNG, TIFF, WebP up to 20MB.",
     browseFiles: "Browse Files",
     cleanExif: "Clean EXIF Data",
     terms: "By uploading, you agree to our",
@@ -86,7 +87,8 @@ const translations = {
     termsOfUseContent: {
       title: "Terms of Use",
       content: "This tool is provided 'as is' without any warranties. Users are responsible for ensuring they have the rights to the images they process. The output is for personal and professional use to enhance privacy."
-    }
+    },
+    fileSizeError: "Some files exceed 20MB and were skipped."
   },
   tr: {
     metaTitle: "EXIF Temizleyici - Fotoğraflarınızdaki Metadataları Anında Temizleyin",
@@ -98,7 +100,7 @@ const translations = {
     instantly: "Anında Temizleyin",
     processedLocally: "Tarayıcınızda yerel olarak işlenir",
     dragDrop: "Görselleri buraya sürükleyin",
-    supports: "JPEG, PNG, TIFF desteklenir (Maks 20MB).",
+    supports: "JPEG, PNG, TIFF, WebP desteklenir (Maks 20MB).",
     browseFiles: "Dosyalara Göz At",
     cleanExif: "EXIF Verilerini Temizle",
     terms: "Yükleme yaparak, ",
@@ -147,7 +149,8 @@ const translations = {
     termsOfUseContent: {
       title: "Kullanım Şartları",
       content: "Bu araç, herhangi bir garanti verilmeksizin olduğu gibi sunulmaktadır. Kullanıcılar, işledikleri görsellerin haklarına sahip olmaktan sorumludur. Sonuçlar kişisel ve profesyonel gizliliği artırmak amaçlıdır."
-    }
+    },
+    fileSizeError: "Bazı dosyalar 20MB sınırını aştığı için atlandı."
   }
 };
 
@@ -157,6 +160,7 @@ function App() {
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
   const [activeInfoModal, setActiveInfoModal] = useState<'howItWorks' | 'privacy' | 'terms' | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
   const [lang, setLang] = useState<'en' | 'tr'>(() => {
     const saved = localStorage.getItem('app_lang');
     return (saved === 'en' || saved === 'tr') ? saved : 'tr';
@@ -194,9 +198,21 @@ function App() {
 
   const selectedFile = files.find(f => f.id === selectedFileId);
 
+  const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+
   const addFiles = async (newFiles: File[]) => {
+    // Filter out files that exceed the maximum size
+    const validFiles = newFiles.filter(file => file.size <= MAX_FILE_SIZE);
+    const skippedCount = newFiles.length - validFiles.length;
+
+    // Show toast if files were skipped
+    if (skippedCount > 0) {
+      setToast(t.fileSizeError);
+      setTimeout(() => setToast(null), 4000);
+    }
+
     const newEntries = await Promise.all(
-      newFiles.map(async (file) => {
+      validFiles.map(async (file) => {
         let metadata = null;
         try {
           metadata = await exifr.parse(file, {
@@ -208,7 +224,7 @@ function App() {
         }
 
         return {
-          id: Math.random().toString(36).substr(2, 9),
+          id: crypto.randomUUID(),
           file,
           previewUrl: URL.createObjectURL(file),
           cleanedDataUrl: null,
@@ -234,7 +250,7 @@ function App() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFiles = Array.from(e.dataTransfer.files).filter(
-      f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff'
+      f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff' || f.type === 'image/webp'
     );
     addFiles(droppedFiles);
   }, []);
@@ -242,7 +258,7 @@ function App() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selected = Array.from(e.target.files).filter(
-        f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff'
+        f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff' || f.type === 'image/webp'
       );
       addFiles(selected);
     }
@@ -263,13 +279,23 @@ function App() {
 
         let cleanedDataUrl: string;
         try {
-          cleanedDataUrl = piexif.remove(dataUrl);
-        } catch {
+          if (item.file.type === 'image/webp') {
+            const cleanedBlob = await cleanWebP(item.file);
+            cleanedDataUrl = await new Promise<string>((resolve) => {
+              const r = new FileReader();
+              r.onload = () => resolve(r.result as string);
+              r.readAsDataURL(cleanedBlob);
+            });
+          } else {
+            cleanedDataUrl = piexif.remove(dataUrl);
+          }
+        } catch (error) {
+          console.error('Cleaning error:', error);
           cleanedDataUrl = dataUrl;
         }
 
         setFiles(prev => prev.map(f =>
-          f.id === item.id ? { ...f, cleanedDataUrl, status: 'done' } : f
+          f.id === item.id ? { ...f, cleanedDataUrl, status: 'done', metadata: null } : f
         ));
       } catch {
         setFiles(prev => prev.map(f => f.id === item.id ? { ...f, status: 'error' } : f));
@@ -283,7 +309,7 @@ function App() {
     link.href = f.cleanedDataUrl;
     const parts = f.file.name.split('.');
     const ext = parts.pop();
-    link.download = `${parts.join('.')}_clean.${ext}`;
+    link.download = `${parts.join('.')}_cleaned.${ext}`;
     link.click();
     if (shouldCloseModal) setSelectedFileId(null);
   };
@@ -311,7 +337,7 @@ function App() {
     const zip = new JSZip();
     for (const f of doneFiles) {
       const base64Data = f.cleanedDataUrl!.split(',')[1];
-      zip.file(`clean_${f.file.name}`, base64Data, { base64: true });
+      zip.file(`cleaned_${f.file.name}`, base64Data, { base64: true });
     }
 
     const content = await zip.generateAsync({ type: 'blob' });
@@ -331,11 +357,25 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark transition-colors duration-300">
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-[200] px-6 py-3 bg-red-600 text-white rounded-xl shadow-lg font-medium text-sm flex items-center gap-2"
+          >
+            <span className="material-symbols-outlined text-lg">warning</span>
+            {toast}
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Navbar */}
       <header className="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 sm:px-10 py-3">
         <div className="flex items-center justify-between mx-auto max-w-[1200px]">
           <div className="flex items-center gap-3">
-            <img src="./favicon/favicon.png" alt="Logo" className="size-8 rounded-lg" />
+            <img src="./favicon/apple-touch-icon.png" alt="Logo" className="size-8 rounded-lg" />
             <h2 className="text-xl font-bold tracking-tight">{t.title}</h2>
           </div>
 
@@ -414,7 +454,7 @@ function App() {
                 </div>
                 <input
                   id="fileInput"
-                  accept="image/png, image/jpeg, image/tiff"
+                  accept="image/png, image/jpeg, image/tiff, image/webp"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   multiple
                   type="file"
@@ -649,7 +689,7 @@ function App() {
             <button onClick={() => setActiveInfoModal('privacy')} className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors cursor-pointer">{t.privacyPolicy}</button>
             <button onClick={() => setActiveInfoModal('terms')} className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors cursor-pointer">{t.termsOfUse}</button>
             <div className="flex gap-2">
-              <a aria-label="Github" className="flex items-center gap-1 text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors text-sm" href="https://github.com/huseyinacikgoz/exif-cleaner" target="_blank">
+              <a aria-label="Github" className="flex items-center gap-1 text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors text-sm" href="https://github.com/huseyinacikgoz/exif-cleaner" target="_blank" rel="noopener noreferrer">
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008-.069-.008.1.015 1.012.984 1.012.984.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"></path>
                 </svg>

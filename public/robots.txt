@@ -1,0 +1,8 @@
+# robots.txt for EXIF Cleaner
+# https://huseyinacikgoz.com.tr/exif-cleaner/
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://huseyinacikgoz.com.tr/exif-cleaner/sitemap.xml

@@ -1,82 +1,24 @@
+<div align="right">
+
+[Türkçe](#türkçe) | [English](#english)
+
+</div>
+
+<a id="türkçe"></a>
+
 <div align="center">
 
 <img src="public/favicon/favicon-192x192.png" width="96" height="96" alt="EXIF Cleaner Logo">
 
 # EXIF Cleaner
 
-🌍 **[English](#english)** | **[Türkçe](#türkçe)**
+**Fotoğraflarınızdan EXIF Verilerini Temizleyin - Gizliliğinizi Koruyun**
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/huseyinacikgoz/exif-cleaner)
+[![Sürüm](https://img.shields.io/badge/sürüm-v1.0.1-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
+[![Lisans](https://img.shields.io/badge/lisans-MIT-blue?style=flat-square)](LICENSE)
+[![Durum](https://img.shields.io/badge/durum-Yayında-green?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
 
 </div>
-
----
-
-## English
-
-### 📖 About
-
-A fast, secure, and privacy-focused tool to remove metadata (EXIF, GPS, device info) from your photos before sharing online. All processing happens locally in your browser - no data is ever uploaded to any server.
-
-### ✨ Features
-
-#### 🔒 Privacy First
-- 100% local processing in your browser
-- No images or metadata uploaded to any server
-- No cookies, tracking, or analytics
-
-#### 🎨 User Experience
-- Beautiful light and dark themes
-- Multi-language support (English & Turkish)
-- Responsive design for desktop and mobile
-- Smooth animations with Framer Motion
-
-#### 📦 Batch Processing
-- Upload multiple images at once
-- Clean all metadata with one click
-- Download as ZIP file
-
-### 🚀 Getting Started
-
-#### Live Version
-🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner)
-
-#### Local Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/huseyinacikgoz/exif-cleaner.git
-cd exif-cleaner
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-### 🛠️ Technologies
-
-- **React 19** - UI Framework
-- **TypeScript** - Type Safety
-- **Vite** - Build Tool
-- **Tailwind CSS v4** - Styling
-- **Framer Motion** - Animations
-- **piexifjs** - EXIF Removal
-- **exifr** - EXIF Reading
-- **JSZip** - Batch ZIP Downloads
-
-### 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Türkçe
 
 ### 📖 Hakkında
 
@@ -139,7 +81,84 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 ---
 
-## 👨‍💻 Geliştirici
+<a id="english"></a>
+
+<div align="center">
+
+<img src="public/favicon/favicon-192x192.png" width="96" height="96" alt="EXIF Cleaner Logo">
+
+# EXIF Cleaner
+
+**Remove EXIF Data from Your Photos - Protect Your Privacy**
+
+[![Version](https://img.shields.io/badge/version-v1.0.1-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/status-Live-green?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
+
+</div>
+
+### 📖 About
+
+A fast, secure, and privacy-focused tool to remove metadata (EXIF, GPS, device info) from your photos before sharing online. All processing happens locally in your browser - no data is ever uploaded to any server.
+
+### ✨ Features
+
+#### 🔒 Privacy First
+- 100% local processing in your browser
+- No images or metadata uploaded to any server
+- No cookies, tracking, or analytics
+
+#### 🎨 User Experience
+- Beautiful light and dark themes
+- Multi-language support (English & Turkish)
+- Responsive design for desktop and mobile
+- Smooth animations with Framer Motion
+
+#### 📦 Batch Processing
+- Upload multiple images at once
+- Clean all metadata with one click
+- Download as ZIP file
+
+### 🚀 Getting Started
+
+#### Live Version
+🌐 [huseyinacikgoz.com.tr/exif-cleaner](https://huseyinacikgoz.com.tr/exif-cleaner)
+
+#### Local Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/huseyinacikgoz/exif-cleaner.git
+cd exif-cleaner
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+### 🛠️ Technologies
+
+- **React 19** - UI Framework
+- **TypeScript** - Type Safety
+- **Vite** - Build Tool
+- **Tailwind CSS v4** - Styling
+- **Framer Motion** - Animations
+- **piexifjs** - EXIF Removal
+- **exifr** - EXIF Reading
+- **JSZip** - Batch ZIP Downloads
+
+### 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👨‍💻 Geliştirici / Developer
 
 **Hüseyin Açıkgöz**
 
@@ -148,25 +167,27 @@ Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 - 🐦 Twitter/X: [@huseyinacikgoz_](https://x.com/huseyinacikgoz_)
 - 💻 GitHub: [@huseyinacikgoz](https://github.com/huseyinacikgoz)
 
-## 🤝 Katkıda Bulunma
+## 🤝 Katkıda Bulunma / Contributing
 
-Katkılarınızı bekliyoruz! Lütfen:
+Katkılarınızı bekliyoruz! / Contributions are welcome!
 
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+1. Fork edin / Fork the repo
+2. Feature branch oluşturun / Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin / Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Branch'inizi push edin / Push your branch (`git push origin feature/amazing-feature`)
+5. Pull Request açın / Open a Pull Request
 
-## 📊 Versiyon
+## 📊 Versiyon / Version
 
-**v1.0.0** - İlk sürüm
+**v1.0.1** - Performans iyileştirmeleri ve hata düzeltmeleri / Performance improvements and bug fixes
 
-## 🔗 Bağlantılar
+**v1.0.0** - İlk sürüm / Initial release
 
-- [🌐 Canlı Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
+## 🔗 Bağlantılar / Links
+
+- [🌐 Canlı Demo / Live Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
 - [💻 GitHub Repo](https://github.com/huseyinacikgoz/exif-cleaner)
-- [📧 İletişim](mailto:mail@huseyinacikgoz.com.tr)
+- [📧 İletişim / Contact](mailto:mail@huseyinacikgoz.com.tr)
 - [🐦 Twitter/X](https://x.com/huseyinacikgoz_)
 
 ---
@@ -174,6 +195,8 @@ Katkılarınızı bekliyoruz! Lütfen:
 <div align="center">
 
 **⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
+
+**⭐ Don't forget to star if you like it! ⭐**
 
 Made with ❤️ by [Hüseyin Açıkgöz](https://huseyinacikgoz.com.tr)
 
