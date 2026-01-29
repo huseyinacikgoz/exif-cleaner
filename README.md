@@ -79,6 +79,46 @@ npm run build
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
+### 👨‍💻 Geliştirici
+
+**Hüseyin Açıkgöz**
+
+- 🌐 Websitesi: [huseyinacikgoz.com.tr](https://huseyinacikgoz.com.tr)
+- 📧 E-posta: [mail@huseyinacikgoz.com.tr](mailto:mail@huseyinacikgoz.com.tr)
+- 🐦 Twitter/X: [@huseyinacikgoz_](https://x.com/huseyinacikgoz_)
+- 💻 GitHub: [@huseyinacikgoz](https://github.com/huseyinacikgoz)
+
+### 🤝 Katkıda Bulunma
+
+Katkılarınızı bekliyoruz!
+
+1. Fork edin
+2. Feature branch oluşturun (`git checkout -b feature/harika-ozellik`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Harika özellik ekle'`)
+4. Branch'inizi push edin (`git push origin feature/harika-ozellik`)
+5. Pull Request açın
+
+### 📊 Versiyon
+
+**v1.0.1** - Performans iyileştirmeleri ve hata düzeltmeleri
+
+**v1.0.0** - İlk sürüm
+
+### 🔗 Bağlantılar
+
+- [🌐 Canlı Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
+- [💻 GitHub Repo](https://github.com/huseyinacikgoz/exif-cleaner)
+- [📧 İletişim](mailto:mail@huseyinacikgoz.com.tr)
+- [🐦 Twitter/X](https://x.com/huseyinacikgoz_)
+
+<div align="center">
+
+**⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
+
+Made with ❤️ by [Hüseyin Açıkgöz](https://huseyinacikgoz.com.tr)
+
+</div>
+
 ---
 
 <a id="english"></a>
@@ -156,9 +196,7 @@ npm run build
 
 This project is licensed under the [MIT License](LICENSE).
 
----
-
-## 👨‍💻 Geliştirici / Developer
+### 👨‍💻 Developer
 
 **Hüseyin Açıkgöz**
 
@@ -167,34 +205,30 @@ This project is licensed under the [MIT License](LICENSE).
 - 🐦 Twitter/X: [@huseyinacikgoz_](https://x.com/huseyinacikgoz_)
 - 💻 GitHub: [@huseyinacikgoz](https://github.com/huseyinacikgoz)
 
-## 🤝 Katkıda Bulunma / Contributing
+### 🤝 Contributing
 
-Katkılarınızı bekliyoruz! / Contributions are welcome!
+Contributions are welcome!
 
-1. Fork edin / Fork the repo
-2. Feature branch oluşturun / Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin / Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Branch'inizi push edin / Push your branch (`git push origin feature/amazing-feature`)
-5. Pull Request açın / Open a Pull Request
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push your branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📊 Versiyon / Version
+### 📊 Version
 
-**v1.0.1** - Performans iyileştirmeleri ve hata düzeltmeleri / Performance improvements and bug fixes
+**v1.0.1** - Performance improvements and bug fixes
 
-**v1.0.0** - İlk sürüm / Initial release
+**v1.0.0** - Initial release
 
-## 🔗 Bağlantılar / Links
+### 🔗 Links
 
-- [🌐 Canlı Demo / Live Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
+- [🌐 Live Demo](https://huseyinacikgoz.com.tr/exif-cleaner)
 - [💻 GitHub Repo](https://github.com/huseyinacikgoz/exif-cleaner)
-- [📧 İletişim / Contact](mailto:mail@huseyinacikgoz.com.tr)
+- [📧 Contact](mailto:mail@huseyinacikgoz.com.tr)
 - [🐦 Twitter/X](https://x.com/huseyinacikgoz_)
 
----
-
 <div align="center">
-
-**⭐ Beğendiyseniz yıldız vermeyi unutmayın! ⭐**
 
 **⭐ Don't forget to star if you like it! ⭐**
 
