@@ -25,14 +25,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.39570064"
-     inkscape:cx="480.16096"
+     inkscape:cx="477.6338"
      inkscape:cy="367.70221"
      inkscape:window-width="1366"
      inkscape:window-height="700"
      inkscape:window-x="0"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" /><defs
+     inkscape:current-layer="g5" /><defs
      id="defs1"><linearGradient
        id="linearGradient1"
        inkscape:collect="always"><stop
@@ -127,9 +127,9 @@
            style="font-size:192px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect4-7);display:none;fill:#eaeef7;fill-opacity:1;stroke-width:41.448;stroke-dasharray:none"><tspan
              x="726.5293"
              y="936.25913"
-             id="tspan8"><tspan
+             id="tspan4"><tspan
                style="font-family:Inter;-inkscape-font-specification:Inter"
-               id="tspan7">=</tspan></tspan></text></g><g
+               id="tspan3">=</tspan></tspan></text></g><g
          id="g4"
          transform="translate(31.316795,-32.840169)"><g
            id="g5"
@@ -144,7 +144,7 @@
                id="tspan1"
                x="474.20154"
                y="303.73761"
-               style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:68.174px;font-family:Inter;-inkscape-font-specification:'Inter Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#272f41;fill-opacity:1;stroke-width:0">EXIF Temizleyici</tspan></text></g><text
+               style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:68.174px;font-family:Inter;-inkscape-font-specification:'Inter Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#272f41;fill-opacity:1;stroke-width:0">EXIF Cleaner</tspan></text></g><text
            xml:space="preserve"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:1.1;font-family:Inter;-inkscape-font-specification:'Inter, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#3a3e7d;fill-opacity:1;stroke-width:0"
            x="558.45776"

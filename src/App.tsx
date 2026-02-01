@@ -4,6 +4,7 @@ import piexif from 'piexifjs';
 import exifr from 'exifr';
 import JSZip from 'jszip';
 import { cleanWebP } from './utils/webpClean';
+import { cleanPng } from './utils/pngClean';
 
 interface Metadata {
   Model?: string;
@@ -27,132 +28,7 @@ interface FileWithStatus {
   metadata: Metadata | null;
 }
 
-const translations = {
-  en: {
-    metaTitle: "EXIF Cleaner - Remove Metadata from Your Photos Instantly",
-    metaDesc: "Secure, fast, and free tool to scrub GPS and device data from your images before sharing online. Processed locally in your browser for maximum privacy.",
-    title: "EXIF Cleaner",
-    howItWorks: "How it works",
-    heroTitle: "Remove Metadata from Your Photos",
-    heroSubtitle: "Secure, fast, and free tool to scrub GPS and device data from your images before sharing online.",
-    instantly: "Instantly",
-    processedLocally: "Processed locally in your browser",
-    dragDrop: "Drag & Drop images here",
-    supports: "Supports JPEG, PNG, TIFF, WebP up to 20MB.",
-    browseFiles: "Browse Files",
-    cleanExif: "Clean EXIF Data",
-    terms: "By uploading, you agree to our",
-    tos: "Terms of Service",
-    termsEnd: ".",
-    whyClean: "Why Clean EXIF Data?",
-    whyDesc: "Every photo you take contains hidden metadata. Cleaning it helps protect your digital footprint.",
-    protectPrivacy: "Protect Privacy",
-    protectPrivacyDesc: "Remove precise GPS coordinates, ensuring your home or work location remains private when sharing photos online.",
-    hideDevice: "Hide Device Info",
-    hideDeviceDesc: "Scrub details about your camera model, lens, shutter speed, and software settings from the image file.",
-    reduceClutter: "Reduce Clutter",
-    reduceClutterDesc: "Strip thumbnail data and proprietary maker notes, keeping your files clean and slightly reducing file size.",
-    photoDetails: "Photo Details",
-    gpsDetected: "GPS Data Detected",
-    gpsDesc: "This data will be removed when you clean the image.",
-    download: "Download Clean Photo",
-    downloadMultiple: "Download Clean Photos (ZIP)",
-    cleanNow: "Clean Now",
-    privacyPolicy: "Privacy Policy",
-    termsOfUse: "Terms of Use",
-    footerText: "© 2026 EXIF Cleaner. Open source and privacy-focused.",
-    cameraModel: "CAMERA MODEL",
-    manufacturer: "MANUFACTURER",
-    software: "SOFTWARE",
-    iso: "ISO SPEED",
-    exposure: "EXPOSURE",
-    fstop: "F-STOP",
-    coordinates: "Coordinates",
-    close: "Close",
-    theme: "Theme",
-    metadataRemoved: "Metadata removed. Your privacy is now protected!",
-    howItWorksContent: {
-      title: "How It Works",
-      steps: [
-        "Select or drag & drop your photos into the upload area.",
-        "The app extracts metadata locally (no data leaves your device).",
-        "Click 'Clean EXIF Data' to remove all sensitive tags.",
-        "Download your cleaned, privacy-safe image."
-      ]
-    },
-    privacyPolicyContent: {
-      title: "Privacy Policy",
-      content: "EXIF Cleaner is built with privacy as its core mission. All image processing is done locally within your browser using JavaScript. No images or metadata are ever uploaded to any server. We do not collect cookies or personal information."
-    },
-    termsOfUseContent: {
-      title: "Terms of Use",
-      content: "This tool is provided 'as is' without any warranties. Users are responsible for ensuring they have the rights to the images they process. The output is for personal and professional use to enhance privacy."
-    },
-    fileSizeError: "Some files exceed 20MB and were skipped."
-  },
-  tr: {
-    metaTitle: "EXIF Temizleyici - Fotoğraflarınızdaki Metadataları Anında Temizleyin",
-    metaDesc: "Güvenli, hızlı ve ücretsiz EXIF temizleme aracı. Fotoğraflarınızdaki GPS, cihaz ve diğer gizli metadataları anında temizleyerek gizliliğinizi koruyun.",
-    title: "EXIF Temizleyici",
-    howItWorks: "Nasıl Çalışır?",
-    heroTitle: "Fotoğraflarınızdaki Metadataları",
-    heroSubtitle: "Görüntülerinizi çevrimiçi paylaşmadan önce GPS ve cihaz verilerini temizlemek için güvenli, hızlı ve ücretsiz bir araç.",
-    instantly: "Anında Temizleyin",
-    processedLocally: "Tarayıcınızda yerel olarak işlenir",
-    dragDrop: "Görselleri buraya sürükleyin",
-    supports: "JPEG, PNG, TIFF, WebP desteklenir (Maks 20MB).",
-    browseFiles: "Dosyalara Göz At",
-    cleanExif: "EXIF Verilerini Temizle",
-    terms: "Yükleme yaparak, ",
-    tos: "Kullanım Koşullarını",
-    termsEnd: " kabul etmiş sayılırsınız.",
-    whyClean: "Neden EXIF Verilerini Temizlemeli?",
-    whyDesc: "Çektiğiniz her fotoğraf gizli metadatalar içerir. Bunları temizlemek dijital ayak izinizi korumanıza yardımcı olur.",
-    protectPrivacy: "Gizliliği Koruyun",
-    protectPrivacyDesc: "Hassas GPS koordinatlarını kaldırarak, fotoğrafları paylaşırken ev veya iş konumunuzun gizli kalmasını sağlayın.",
-    hideDevice: "Cihaz Bilgisini Gizleyin",
-    hideDeviceDesc: "Kamera modeli, lens, deklanşör hızı ve yazılım ayarları hakkındaki detayları temizleyin.",
-    reduceClutter: "Dosya Boyutunu Azaltın",
-    reduceClutterDesc: "Küçük resim verilerini ve özel üretici notlarını temizleyerek dosyalarınızı sadeleştirin.",
-    photoDetails: "Fotoğraf Detayları",
-    gpsDetected: "GPS Verisi Tespit Edildi",
-    gpsDesc: "Bu veriler, görseli temizlediğinizde kaldırılacaktır.",
-    download: "Temizlenmiş Görseli İndir",
-    downloadMultiple: "Temizlenmiş Görselleri İndir (ZIP)",
-    cleanNow: "Hemen Temizle",
-    privacyPolicy: "Gizlilik Politikası",
-    termsOfUse: "Kullanım Şartları",
-    footerText: "© 2026 EXIF Temizleyici. Açık kaynak ve gizlilik odaklı.",
-    cameraModel: "KAMERA MODELİ",
-    manufacturer: "ÜRETİCİ",
-    software: "YAZILIM",
-    iso: "ISO HIZI",
-    exposure: "POZLAMA",
-    fstop: "F-DEĞERİ",
-    coordinates: "Koordinatlar",
-    close: "Kapat",
-    theme: "Tema",
-    metadataRemoved: "Meta verileriniz temizlendi. Artık güvendesiniz!",
-    howItWorksContent: {
-      title: "Nasıl Çalışır?",
-      steps: [
-        "Fotoğraflarınızı seçin veya sürükleyip bırakın.",
-        "Uygulama metadataları yerel olarak çıkarır (cihazınızdan veri çıkmaz).",
-        "'EXIF Verilerini Temizle' butonuna basarak tüm verileri silin.",
-        "Temizlenmiş ve güvenli görselinizi indirin."
-      ]
-    },
-    privacyPolicyContent: {
-      title: "Gizlilik Politikası",
-      content: "EXIF Temizleyici, gizlilik odaklı bir araçtır. Tüm işlemler tarayıcınızda yerel olarak çalışır. Görselleriniz veya metadataları hiçbir sunucuya yüklenmez. Çerez veya kişisel veri toplamıyoruz."
-    },
-    termsOfUseContent: {
-      title: "Kullanım Şartları",
-      content: "Bu araç, herhangi bir garanti verilmeksizin olduğu gibi sunulmaktadır. Kullanıcılar, işledikleri görsellerin haklarına sahip olmaktan sorumludur. Sonuçlar kişisel ve profesyonel gizliliği artırmak amaçlıdır."
-    },
-    fileSizeError: "Bazı dosyalar 20MB sınırını aştığı için atlandı."
-  }
-};
+import { translations } from './translations';
 
 function App() {
   const [files, setFiles] = useState<FileWithStatus[]>([]);
@@ -281,6 +157,13 @@ function App() {
         try {
           if (item.file.type === 'image/webp') {
             const cleanedBlob = await cleanWebP(item.file);
+            cleanedDataUrl = await new Promise<string>((resolve) => {
+              const r = new FileReader();
+              r.onload = () => resolve(r.result as string);
+              r.readAsDataURL(cleanedBlob);
+            });
+          } else if (item.file.type === 'image/png') {
+            const cleanedBlob = await cleanPng(item.file);
             cleanedDataUrl = await new Promise<string>((resolve) => {
               const r = new FileReader();
               r.onload = () => resolve(r.result as string);
