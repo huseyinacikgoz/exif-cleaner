@@ -1,0 +1,40 @@
+{
+    "name": "exif-cleaner-cli",
+    "version": "1.0.4",
+    "description": "A fast, secure CLI tool to remove EXIF metadata from photos — cross-platform",
+    "author": "Hüseyin Açıkgöz <mail@huseyinacikgoz.com.tr>",
+    "license": "MIT",
+    "type": "module",
+    "bin": {
+        "exif-cleaner": "./bin/exif-cleaner.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/huseyinacikgoz/exif-cleaner.git"
+    },
+    "homepage": "https://huseyinacikgoz.com.tr/exif-cleaner",
+    "keywords": [
+        "exif",
+        "metadata",
+        "privacy",
+        "photo",
+        "cli",
+        "jpeg",
+        "png",
+        "webp",
+        "tiff",
+        "cleaner"
+    ],
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "dependencies": {
+        "chalk": "^5.4.1",
+        "commander": "^13.1.0",
+        "glob": "^11.0.1",
+        "jszip": "^3.10.1",
+        "ora": "^8.2.0",
+        "pdf-lib": "^1.17.1",
+        "piexifjs": "^1.0.6"
+    }
+}

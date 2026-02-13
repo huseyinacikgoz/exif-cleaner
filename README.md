@@ -12,9 +12,9 @@
 
 # EXIF Cleaner
 
-**Fotoğraflarınızdan EXIF Verilerini Temizleyin - Gizliliğinizi Koruyun**
+**Fotoğraflarınızdan ve Dökümanlarınızdan Metadata Temizleyin - Gizliliğinizi Koruyun**
 
-[![Sürüm](https://img.shields.io/badge/sürüm-v1.0.3-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
+[![Sürüm](https://img.shields.io/badge/sürüm-v1.0.4-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
 [![Lisans](https://img.shields.io/badge/lisans-MIT-blue?style=flat-square)](LICENSE)
 [![Durum](https://img.shields.io/badge/durum-Yayında-green?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
 
@@ -37,10 +37,12 @@ Fotoğraflarınızı çevrimiçi paylaşmadan önce metadata (EXIF, GPS, cihaz b
 - Masaüstü ve mobil için duyarlı tasarım
 - Framer Motion ile akıcı animasyonlar
 
-#### 📦 Toplu İşlem
-- Birden fazla görsel aynı anda yükleyin
-- Tek tıkla tüm metadata'yı temizleyin
-- ZIP dosyası olarak indirin
+#### 📦 Toplu İşlem / Format Desteği
+- Birden fazla görsel ve dökümanı aynı anda temizleyin
+- **Görsel**: JPEG, PNG, WebP, TIFF
+- **Döküman**: PDF, DOCX, XLSX, PPTX
+- **Metin**: TXT, MD
+- ZIP dosyası olarak indirin (Web)
 
 ### 🚀 Başlarken
 
@@ -63,6 +65,44 @@ npm run dev
 # Üretim için derleyin
 npm run build
 ```
+
+#### 💻 CLI (Terminal) Kullanımı
+
+Exif Cleaner artık terminalden de kullanılabilir! Linux, macOS ve Windows destekler.
+
+```bash
+# CLI dizinine geçin ve bağımlılıkları yükleyin
+cd cli
+npm install
+
+# Global komut olarak kaydedin (artık her yerden 'exif-cleaner' yazarak kullanabilirsiniz)
+sudo npm link
+
+# Tek dosya temizle
+exif-cleaner foto.jpg
+
+# Klasördeki tüm görselleri temizle
+exif-cleaner ./fotolar/
+
+# Alt klasörlerle birlikte, özel çıkış dizinine
+exif-cleaner ./fotolar/ -r -o ./temiz/
+
+# Orijinal dosyaların üzerine yaz
+exif-cleaner foto.jpg -w
+
+# Detaylı çıktı ve Türkçe dil
+exif-cleaner . -r -v --lang tr
+```
+
+**CLI Seçenekleri:**
+| Seçenek | Açıklama |
+|---------|----------|
+| `-o, --output <dizin>` | Çıkış dizini |
+| `-w, --overwrite` | Orijinal dosyaların üzerine yaz |
+| `-r, --recursive` | Alt dizinleri de tara |
+| `-l, --lang <dil>` | Dil seçimi (en veya tr) |
+| `-v, --verbose` | Detaylı çıktı göster |
+| `--check-update` | Manuel güncelleme kontrolü yap |
 
 ### 🛠️ Teknolojiler
 
@@ -100,6 +140,8 @@ Katkılarınızı bekliyoruz!
 
 ### 📊 Versiyon
 
+**v1.0.4** - CLI (terminal) desteği eklendi — Linux, macOS ve Windows uyumlu
+
 **v1.0.3** - PNG format desteği, SEO iyileştirmeleri ve kod optimizasyonları
 
 **v1.0.2** - Sosyal medya paylaşım görseli (og:image) ve favicon güncellemeleri
@@ -133,9 +175,9 @@ Made with ❤️ by [Hüseyin Açıkgöz](https://huseyinacikgoz.com.tr)
 
 # EXIF Cleaner
 
-**Remove EXIF Data from Your Photos - Protect Your Privacy**
+**Remove Metadata from Your Photos and Documents - Protect Your Privacy**
 
-[![Version](https://img.shields.io/badge/version-v1.0.3-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
+[![Version](https://img.shields.io/badge/version-v1.0.4-black?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/status-Live-green?style=flat-square)](https://huseyinacikgoz.com.tr/exif-cleaner/)
 
@@ -158,10 +200,12 @@ A fast, secure, and privacy-focused tool to remove metadata (EXIF, GPS, device i
 - Responsive design for desktop and mobile
 - Smooth animations with Framer Motion
 
-#### 📦 Batch Processing
-- Upload multiple images at once
-- Clean all metadata with one click
-- Download as ZIP file
+#### 📦 Batch Processing / Format Support
+- Clean multiple images and documents at once
+- **Images**: JPEG, PNG, WebP, TIFF
+- **Documents**: PDF, DOCX, XLSX, PPTX
+- **Text**: TXT, MD
+- Download as ZIP file (Web)
 
 ### 🚀 Getting Started
 
@@ -184,6 +228,44 @@ npm run dev
 # Build for production
 npm run build
 ```
+
+#### 💻 CLI (Terminal) Usage
+
+Exif Cleaner now works from the terminal! Supports Linux, macOS, and Windows.
+
+```bash
+# Navigate to CLI directory and install dependencies
+cd cli
+npm install
+
+# Register as a global command (you can now use 'exif-cleaner' from anywhere)
+sudo npm link
+
+# Clean a single file
+exif-cleaner photo.jpg
+
+# Clean all images in a folder
+exif-cleaner ./photos/
+
+# Recursively with custom output directory
+exif-cleaner ./photos/ -r -o ./cleaned/
+
+# Overwrite original files
+exif-cleaner photo.jpg -w
+
+# Verbose output with English language
+exif-cleaner . -r -v --lang en
+```
+
+**CLI Options:**
+| Option | Description |
+|--------|-------------|
+| `-o, --output <dir>` | Output directory |
+| `-w, --overwrite` | Overwrite original files |
+| `-r, --recursive` | Process subdirectories recursively |
+| `-l, --lang <lang>` | Language (en or tr) |
+| `-v, --verbose` | Show detailed output |
+| `--check-update` | Manually check for updates |
 
 ### 🛠️ Technologies
 
@@ -220,6 +302,8 @@ Contributions are welcome!
 5. Open a Pull Request
 
 ### 📊 Version
+
+**v1.0.4** - CLI (terminal) support added — compatible with Linux, macOS, and Windows
 
 **v1.0.3** - PNG format support, SEO improvements, and code optimizations
 

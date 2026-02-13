@@ -1,6 +1,6 @@
 {
   "name": "exif-cleaner",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A fast, secure, and privacy-focused tool to remove EXIF metadata from photos",
   "author": "Hüseyin Açıkgöz <mail@huseyinacikgoz.com.tr>",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "framer-motion": "^12.24.7",
     "jszip": "^3.10.1",
     "lucide-react": "^0.562.0",
+    "pdf-lib": "^1.17.1",
     "piexifjs": "^1.0.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

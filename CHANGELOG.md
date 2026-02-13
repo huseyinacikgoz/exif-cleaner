@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-02-13
+
+### Added
+- **CLI (Command Line Interface)**: A fast, secure terminal tool for Linux, macOS, and Windows
+- **Document Support (Web & CLI)**: Added metadata removal for **PDF, DOCX, XLSX, PPTX, TXT, and MD** files
+- Global command support via `npm link`
+- Support for batch processing, recursive directory scanning, and custom output directories
+- Visual progress bar and detailed summary in the terminal
+- Bilingual CLI output (English & Turkish)
+
+## [1.0.3] - 2026-02-01
+
+### Added
+- **PNG Support**: Ability to clean metadata from PNG files without re-encoding
+- **WebP Support**: Ported browser-side WebP metadata removal to the utility library
+- Bilingual translation system refactored into `translations.ts`
+- Optimized SEO meta tags and canonical URLs
+
 ## [1.0.1] - 2026-01-23
 
 ### Fixed
@@ -46,8 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- WebP/HEIC format support
+- **HEIC/HEIF support** (requires heavier dependencies like libheif)
 - PWA / Service Worker for offline use
-- Code splitting for reduced bundle size
-- User-selectable metadata cleaning options
-- Web Worker for non-blocking EXIF processing
+- Web Worker for non-blocking EXIF processing in the browser
+- Advanced metadata cleaning options (selective removal)
+- Context menu integration for OS (Windows/Linux)

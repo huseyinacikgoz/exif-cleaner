@@ -4,14 +4,14 @@ export const translations = {
         metaDesc: "Secure, fast, and free tool to scrub GPS and device data from your images before sharing online. Processed locally in your browser for maximum privacy.",
         title: "EXIF Cleaner",
         howItWorks: "How it works",
-        heroTitle: "Remove Metadata from Your Photos",
-        heroSubtitle: "Secure, fast, and free tool to scrub GPS and device data from your images before sharing online.",
+        heroTitle: "Remove Metadata from Photos & Docs",
+        heroSubtitle: "Secure, fast, and free tool to scrub GPS, device, and document metadata before sharing online.",
         instantly: "Instantly",
         processedLocally: "Processed locally in your browser",
-        dragDrop: "Drag & Drop images here",
-        supports: "Supports JPEG, PNG, TIFF, WebP up to 20MB.",
+        dragDrop: "Drag & Drop files here",
+        supports: "Supports JPEG, PNG, TIFF, WebP, PDF, Office & Text up to 20MB.",
         browseFiles: "Browse Files",
-        cleanExif: "Clean EXIF Data",
+        cleanExif: "Clean Metadata",
         terms: "By uploading, you agree to our",
         tos: "Terms of Service",
         termsEnd: ".",
@@ -45,10 +45,10 @@ export const translations = {
         howItWorksContent: {
             title: "How It Works",
             steps: [
-                "Select or drag & drop your photos into the upload area.",
+                "Select or drag & drop your photos or documents into the upload area.",
                 "The app extracts metadata locally (no data leaves your device).",
-                "Click 'Clean EXIF Data' to remove all sensitive tags.",
-                "Download your cleaned, privacy-safe image."
+                "Click 'Clean Metadata' to remove all sensitive tags.",
+                "Download your cleaned, privacy-safe files."
             ]
         },
         privacyPolicyContent: {
@@ -66,14 +66,14 @@ export const translations = {
         metaDesc: "Güvenli, hızlı ve ücretsiz EXIF temizleme aracı. Fotoğraflarınızdaki GPS, cihaz ve diğer gizli metadataları anında temizleyerek gizliliğinizi koruyun.",
         title: "EXIF Cleaner",
         howItWorks: "Nasıl Çalışır?",
-        heroTitle: "Fotoğraflarınızdaki Metadataları",
-        heroSubtitle: "Görüntülerinizi çevrimiçi paylaşmadan önce GPS ve cihaz verilerini temizlemek için güvenli, hızlı ve ücretsiz bir araç.",
+        heroTitle: "Fotoğraf ve Döküman Metadatalarını",
+        heroSubtitle: "Görüntülerinizi ve dökümanlarınızı çevrimiçi paylaşmadan önce GPS, cihaz ve yazar verilerini temizlemek için güvenli, hızlı ve ücretsiz bir araç.",
         instantly: "Anında Temizleyin",
         processedLocally: "Tarayıcınızda yerel olarak işlenir",
-        dragDrop: "Görselleri buraya sürükleyin",
-        supports: "JPEG, PNG, TIFF, WebP desteklenir (Maks 20MB).",
+        dragDrop: "Dosyaları buraya sürükleyin",
+        supports: "Resim, PDF, Office ve Metin dosyaları desteklenir (Maks 20MB).",
         browseFiles: "Dosyalara Göz At",
-        cleanExif: "EXIF Verilerini Temizle",
+        cleanExif: "Metadataları Temizle",
         terms: "Yükleme yaparak, ",
         tos: "Kullanım Koşullarını",
         termsEnd: " kabul etmiş sayılırsınız.",
@@ -107,10 +107,10 @@ export const translations = {
         howItWorksContent: {
             title: "Nasıl Çalışır?",
             steps: [
-                "Fotoğraflarınızı seçin veya sürükleyip bırakın.",
+                "Fotoğraflarınızı veya dökümanlarınızı seçin veya sürükleyip bırakın.",
                 "Uygulama metadataları yerel olarak çıkarır (cihazınızdan veri çıkmaz).",
-                "'EXIF Verilerini Temizle' butonuna basarak tüm verileri silin.",
-                "Temizlenmiş ve güvenli görselinizi indirin."
+                "'Metadataları Temizle' butonuna basarak tüm verileri silin.",
+                "Temizlenmiş ve güvenli dosyalarınızı indirin."
             ]
         },
         privacyPolicyContent: {

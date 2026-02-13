@@ -5,6 +5,9 @@ import exifr from 'exifr';
 import JSZip from 'jszip';
 import { cleanWebP } from './utils/webpClean';
 import { cleanPng } from './utils/pngClean';
+import { cleanPdf } from './utils/pdfClean';
+import { cleanOffice } from './utils/officeClean';
+import { cleanText } from './utils/textClean';
 
 interface Metadata {
   Model?: string;
@@ -125,17 +128,21 @@ function App() {
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    const droppedFiles = Array.from(e.dataTransfer.files).filter(
-      f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff' || f.type === 'image/webp'
-    );
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.webp', '.pdf', '.docx', '.xlsx', '.pptx', '.txt', '.md'];
+    const droppedFiles = Array.from(e.dataTransfer.files).filter(f => {
+      const ext = f.name.toLowerCase().split('.').pop();
+      return allowedExtensions.includes('.' + ext) || f.type.startsWith('image/') || f.type === 'application/pdf';
+    });
     addFiles(droppedFiles);
   }, []);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selected = Array.from(e.target.files).filter(
-        f => f.type === 'image/jpeg' || f.type === 'image/png' || f.type === 'image/tiff' || f.type === 'image/webp'
-      );
+      const allowedExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.webp', '.pdf', '.docx', '.xlsx', '.pptx', '.txt', '.md'];
+      const selected = Array.from(e.target.files).filter(f => {
+        const ext = f.name.toLowerCase().split('.').pop();
+        return allowedExtensions.includes('.' + ext) || f.type.startsWith('image/') || f.type === 'application/pdf';
+      });
       addFiles(selected);
     }
   };
@@ -155,22 +162,46 @@ function App() {
 
         let cleanedDataUrl: string;
         try {
-          if (item.file.type === 'image/webp') {
+          const ext = item.file.name.toLowerCase().split('.').pop();
+          if (item.file.type === 'image/webp' || ext === 'webp') {
             const cleanedBlob = await cleanWebP(item.file);
             cleanedDataUrl = await new Promise<string>((resolve) => {
               const r = new FileReader();
               r.onload = () => resolve(r.result as string);
               r.readAsDataURL(cleanedBlob);
             });
-          } else if (item.file.type === 'image/png') {
+          } else if (item.file.type === 'image/png' || ext === 'png') {
             const cleanedBlob = await cleanPng(item.file);
             cleanedDataUrl = await new Promise<string>((resolve) => {
               const r = new FileReader();
               r.onload = () => resolve(r.result as string);
               r.readAsDataURL(cleanedBlob);
             });
-          } else {
+          } else if (item.file.type === 'application/pdf' || ext === 'pdf') {
+            const cleanedBlob = await cleanPdf(item.file);
+            cleanedDataUrl = await new Promise<string>((resolve) => {
+              const r = new FileReader();
+              r.onload = () => resolve(r.result as string);
+              r.readAsDataURL(cleanedBlob);
+            });
+          } else if (['docx', 'xlsx', 'pptx'].includes(ext || '')) {
+            const cleanedBlob = await cleanOffice(item.file);
+            cleanedDataUrl = await new Promise<string>((resolve) => {
+              const r = new FileReader();
+              r.onload = () => resolve(r.result as string);
+              r.readAsDataURL(cleanedBlob);
+            });
+          } else if (['txt', 'md'].includes(ext || '')) {
+            const cleanedBlob = await cleanText(item.file);
+            cleanedDataUrl = await new Promise<string>((resolve) => {
+              const r = new FileReader();
+              r.onload = () => resolve(r.result as string);
+              r.readAsDataURL(cleanedBlob);
+            });
+          } else if (['jpg', 'jpeg', 'tiff', 'tif'].includes(ext || '') || item.file.type.startsWith('image/')) {
             cleanedDataUrl = piexif.remove(dataUrl);
+          } else {
+            cleanedDataUrl = dataUrl;
           }
         } catch (error) {
           console.error('Cleaning error:', error);
@@ -337,7 +368,7 @@ function App() {
                 </div>
                 <input
                   id="fileInput"
-                  accept="image/png, image/jpeg, image/tiff, image/webp"
+                  accept="image/*, application/pdf, .docx, .xlsx, .pptx, .txt, .md"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   multiple
                   type="file"
@@ -363,7 +394,16 @@ function App() {
                         className={`flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${selectedFileId === f.id ? 'border-primary bg-primary/5 shadow-sm shadow-primary/10' : 'border-border-light dark:border-border-dark hover:border-primary/30 hover:bg-background-light/50 dark:hover:bg-background-dark/30'}`}
                       >
                         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                          <img src={f.previewUrl} className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover bg-background-light dark:bg-background-dark flex-shrink-0" />
+                          {f.file.type.startsWith('image/') ? (
+                            <img src={f.previewUrl} className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover bg-background-light dark:bg-background-dark flex-shrink-0" />
+                          ) : (
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-background-light dark:bg-background-dark flex-shrink-0 flex items-center justify-center text-primary border border-border-light dark:border-border-dark">
+                              <span className="material-symbols-outlined text-2xl">
+                                {f.file.type === 'application/pdf' ? 'picture_as_pdf' :
+                                  f.file.name.match(/\.(docx|xlsx|pptx)$/i) ? 'description' : 'text_snippet'}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex flex-col min-w-0">
                             <p className="text-xs sm:text-sm font-bold truncate">{f.file.name}</p>
                             <p className="text-[10px] sm:text-[11px] text-text-secondary-light dark:text-text-secondary-dark font-medium">{(f.file.size / 1024).toFixed(1)} KB</p>
@@ -511,20 +551,51 @@ function App() {
                     </p>
                   </motion.div>
                 )}
-                <img src={selectedFile.previewUrl} className="w-full h-48 object-contain bg-background-light dark:bg-background-dark rounded-xl mb-6 shadow-inner" />
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <DetailItem label={t.cameraModel} value={selectedFile.metadata?.Model} icon="camera" />
-                    <DetailItem label={t.manufacturer} value={selectedFile.metadata?.Make} icon="factory" />
-                    <DetailItem label={t.software} value={selectedFile.metadata?.Software} icon="terminal" />
-                  </div>
-                  <div className="space-y-4">
-                    <DetailItem label={t.iso} value={selectedFile.metadata?.ISO?.toString()} icon="exposure" />
-                    <DetailItem label={t.exposure} value={selectedFile.metadata?.ExposureTime ? `1/${Math.round(1 / selectedFile.metadata.ExposureTime)}s` : undefined} icon="shutter_speed" />
-                    <DetailItem label={t.fstop} value={selectedFile.metadata?.FNumber ? `f/${selectedFile.metadata.FNumber}` : undefined} icon="filter_tilt_shift" />
-                  </div>
+                <div className="flex justify-center mb-6">
+                  {selectedFile.file.type.startsWith('image/') ? (
+                    <img src={selectedFile.previewUrl} className="w-full h-48 object-contain bg-background-light dark:bg-background-dark rounded-xl shadow-inner" />
+                  ) : (
+                    <div className="w-full h-48 bg-background-light dark:bg-background-dark rounded-xl shadow-inner flex flex-col items-center justify-center gap-4 text-primary">
+                      <span className="material-symbols-outlined text-6xl">
+                        {selectedFile.file.type === 'application/pdf' ? 'picture_as_pdf' :
+                          selectedFile.file.name.match(/\.(docx|xlsx|pptx)$/i) ? 'description' : 'text_snippet'}
+                      </span>
+                      <span className="text-sm font-bold text-text-secondary-light dark:text-text-secondary-dark">{selectedFile.file.name.split('.').pop()?.toUpperCase()}</span>
+                    </div>
+                  )}
                 </div>
+
+                {selectedFile.file.type.startsWith('image/') ? (
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <DetailItem label={t.cameraModel} value={selectedFile.metadata?.Model} icon="camera" />
+                      <DetailItem label={t.manufacturer} value={selectedFile.metadata?.Make} icon="factory" />
+                      <DetailItem label={t.software} value={selectedFile.metadata?.Software} icon="terminal" />
+                    </div>
+                    <div className="space-y-4">
+                      <DetailItem label={t.iso} value={selectedFile.metadata?.ISO?.toString()} icon="exposure" />
+                      <DetailItem label={t.exposure} value={selectedFile.metadata?.ExposureTime ? `1/${Math.round(1 / selectedFile.metadata.ExposureTime)}s` : undefined} icon="shutter_speed" />
+                      <DetailItem label={t.fstop} value={selectedFile.metadata?.FNumber ? `f/${selectedFile.metadata.FNumber}` : undefined} icon="filter_tilt_shift" />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-4 bg-background-light dark:bg-background-dark rounded-xl border border-border-light dark:border-border-dark">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between text-xs sm:text-sm">
+                        <span className="text-text-secondary-light dark:text-text-secondary-dark font-medium">File Name:</span>
+                        <span className="font-bold truncate max-w-[200px]">{selectedFile.file.name}</span>
+                      </div>
+                      <div className="flex justify-between text-xs sm:text-sm">
+                        <span className="text-text-secondary-light dark:text-text-secondary-dark font-medium">Type:</span>
+                        <span className="font-bold uppercase">{selectedFile.file.type || 'Document'}</span>
+                      </div>
+                      <div className="flex justify-between text-xs sm:text-sm">
+                        <span className="text-text-secondary-light dark:text-text-secondary-dark font-medium">Size:</span>
+                        <span className="font-bold">{(selectedFile.file.size / 1024).toFixed(1)} KB</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {selectedFile.metadata?.latitude && (
                   <div className="mt-8 p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-xl">
